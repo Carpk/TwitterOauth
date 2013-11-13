@@ -16,7 +16,6 @@ get '/auth' do
   # the `request_token` method is defined in `app/helpers/oauth.rb`
   @access_token = request_token.get_access_token(:oauth_verifier => params[:oauth_verifier])
   # our request token is only valid until we use it to get an access token, so let's delete it from our session
-  puts @access_token.inspect
   session.delete(:request_token)
 
   conditions = { oauth_token: @access_token.token,
