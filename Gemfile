@@ -27,4 +27,3 @@ end
 gem 'sidekiq'
 gem 'redis'
 
-gem 'debugger'
