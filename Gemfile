@@ -23,3 +23,8 @@ group :test do
   gem 'faker'
   gem 'rspec'
 end
+
+gem 'sidekiq'
+gem 'redis'
+
+gem 'debugger'

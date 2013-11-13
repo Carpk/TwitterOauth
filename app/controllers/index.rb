@@ -12,6 +12,13 @@ get '/sign_out' do
   redirect '/'
 end
 
+get '/status/:job_id' do
+  # return the status of a job to an AJAX call
+  jobID = params[:job_id]
+  @jobStatus = job_is_complete(jobID)
+  erb :index
+end
+
 get '/auth' do
   # the `request_token` method is defined in `app/helpers/oauth.rb`
   @access_token = request_token.get_access_token(:oauth_verifier => params[:oauth_verifier])
@@ -24,14 +31,16 @@ get '/auth' do
   }
   user = User.find(:first, conditions: conditions) || User.create(conditions)
   # at this point in the code is where you'll need to create your user account and store the access token
-  session[:user_id] = user.id
-  session[:token] = user.oauth_token
-  session[:secret] = user.oauth_secret
+  set_oauth_session
   erb :index
  end
 
 post '/tweets' do
-  puts params[:tweet]
-  client.update(params[:tweet])
-  redirect to '/'
+  user = User.find(session[:user_id])
+  jobID = user.tweet(params[:tweet])
+end
+
+post '/tweets/later' do
+  user = User.find(session[:user_id])
+  jobID = user.tweet_later(params[:tweet], params[:seconds].to_i)
 end

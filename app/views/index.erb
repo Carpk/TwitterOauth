@@ -9,16 +9,31 @@
   %>
   <% if session[:user_id] %>
     <div>
-        <form id="tweetform" action="/tweets" method="POST">
+        <form id="tweetform_now" class="tweetform" action="/tweets" method="POST">
           <input id="tweet" type="text" name="tweet">
-          <input id="submit" type="submit" value="Tweet!">
+          <input id="submit" type="submit" value="Tweet Now!">
+        </form>
+
+        <form id="tweetform_later" class="tweetform" action="/tweets/later" method="POST">
+          <input id="tweet" type="text" name="tweet">
+          <input id="seconds" type="text" name="seconds">secs
+          <input id="postpone" type="submit" value="Tweet Later!">
         </form>
       <p>
         <button><a href="/sign_out">Sign Out</a></button>
       </p>
     </div>
+    <% if @jobStatus %>
+     <p>Tweet Posted!</p>
+     <% else %>
+      <p>Still working!</p>
+    <% end %>
   <% else %>
     <button><a href="/sign_in">Sign In with Twitter</a></button>
   <% end %>
+
+  <div>
+
+  </div>  
 
 </div>

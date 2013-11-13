@@ -27,3 +27,9 @@ def client
     :oauth_token_secret => session[:secret]
     )
 end
+
+def set_oauth_session
+  session[:user_id] = user.id
+  session[:token] = user.oauth_token
+  session[:secret] = user.oauth_secret
+end
