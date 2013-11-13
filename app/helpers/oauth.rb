@@ -15,8 +15,15 @@ def request_token
 
     # the `oauth_consumer` method is defined above
     session[:request_token] = oauth_consumer.get_request_token(
-      :oauth_callback => "http://#{host_and_port}/auth"
+            :oauth_callback => "http://#{host_and_port}/auth"
     )
   end
   session[:request_token]
+end
+
+def client
+  @client = Twitter::Client.new(
+    :oauth_token => session[:token],
+    :oauth_token_secret => session[:secret]
+    )
 end
